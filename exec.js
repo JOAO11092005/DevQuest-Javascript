@@ -26,22 +26,17 @@ process.chdir(repoPath);
 
 // 2. Inicializa o repositório Git
 runCommand('git init', () => {
-    // 3. Adiciona todos os arquivos ao repositório, exceto o .env
+    // 3. Adiciona todos os arquivos ao repositório
     runCommand('git add .', () => {
         // 4. Faz o commit das alterações
         runCommand('git commit -m "Atualizar Curso Upload"', () => {
             // 5. Cria ou edita o arquivo .gitignore e adiciona .env
             runCommand('echo .env >> .gitignore', () => {
-                // 6. Caso o .env já tenha sido enviado para o repositório, remove-o
-                runCommand('git rm --cached .env', () => {
-                    runCommand('git commit -m "Remover .env do repositório"', () => {
-                        // 7. Adiciona o repositório remoto
-                        runCommand('git remote add origin https://github.com/JOAO11092005/DevQuest-Javascript.git', () => {
-                            // 8. Envia os arquivos para o GitHub
-                            runCommand('git push -u origin main', () => {
-                                console.log('Processo concluído com sucesso!');
-                            });
-                        });
+                // 6. Adiciona o repositório remoto
+                runCommand('git remote add origin https://github.com/JOAO11092005/DevQuest-Javascript.git', () => {
+                    // 7. Envia os arquivos para o GitHub
+                    runCommand('git push -u origin main', () => {
+                        console.log('Processo concluído com sucesso!');
                     });
                 });
             });

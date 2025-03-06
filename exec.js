@@ -32,12 +32,24 @@ runCommand('git init', () => {
         runCommand('git commit -m "Atualizar Curso Upload"', () => {
             // 5. Cria ou edita o arquivo .gitignore e adiciona .env
             runCommand('echo .env >> .gitignore', () => {
-                // 6. Adiciona o repositório remoto
-                runCommand('git remote add origin https://github.com/JOAO11092005/DevQuest-Javascript.git', () => {
-                    // 7. Envia os arquivos para o GitHub
-                    runCommand('git push -u origin main', () => {
-                        console.log('Processo concluído com sucesso!');
-                    });
+                // Verifica se o repositório remoto já existe
+                runCommand('git remote get-url origin', (error, stdout, stderr) => {
+                    if (error) {
+                        // Se o repositório remoto não existir, adiciona o repositório remoto
+                        console.log('Repositório remoto não encontrado, adicionando...');
+                        runCommand('git remote add origin https://github.com/JOAO11092005/DevQuest-Javascript.git', () => {
+                            // Envia os arquivos para o GitHub
+                            runCommand('git push -u origin main', () => {
+                                console.log('Processo concluído com sucesso!');
+                            });
+                        });
+                    } else {
+                        // Se o repositório remoto já existir, apenas envia os arquivos
+                        console.log('Repositório remoto já configurado, enviando para o GitHub...');
+                        runCommand('git push -u origin main', () => {
+                            console.log('Processo concluído com sucesso!');
+                        });
+                    }
                 });
             });
         });
